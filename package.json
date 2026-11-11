@@ -1,0 +1,12 @@
+{
+  "name": "catan-resource-tracker-bga",
+  "version": "1.0.2",
+  "private": true,
+  "description": "Tampermonkey userscript showing resource counters received by the BGA CATAN client for all players",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "check": "node --check catan-resource-tracker.user.js"
+  },
+  "engines": { "node": ">=22" }
+}

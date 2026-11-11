@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CATAN resource tracker · Local demonstration</title>
+  <style>
+    :root { color-scheme: light; font: 15px/1.5 system-ui, sans-serif; color: #183638; background: #f4f5ef; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 1150px; margin: 0 auto; padding: 36px 24px 48px; }
+    .eyebrow { margin: 0 0 10px; color: #53736a; font-size: 12px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { font-size: clamp(27px, 4vw, 40px); line-height: 1.15; letter-spacing: -.04em; margin: 0 0 12px; }
+    .intro { max-width: 770px; color: #536b69; margin: 0; }
+    .notice { border: 1px solid #c8d6cb; background: #e9f0e7; padding: 12px 16px; border-radius: 10px; margin-top: 22px; font-size: 13px; }
+    .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 22px; margin-top: 24px; align-items: start; }
+    .players { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .player { border: 1px solid #d7dfd7; border-radius: 13px; background: #fff; padding: 16px; box-shadow: 0 5px 20px #18363805; min-height: 210px; }
+    .player-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 11px; }
+    .avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 750; color: #fff; background: var(--player-color); }
+    h2 { font-size: 16px; line-height: 1.3; margin: 0; }
+    .player-role { color: #6a7d79; font-size: 11px; margin: 2px 0 0; }
+    .player-placeholder { font-size: 12px; color: #71827f; margin: 0 0 6px; }
+    .controls { background: #fff; padding: 19px; border: 1px solid #d7dfd7; border-radius: 13px; }
+    .controls h2 { margin-bottom: 5px; }
+    .controls p { margin: 0 0 14px; font-size: 12px; color: #617570; }
+    .control-list { display: grid; gap: 8px; }
+    button { background: #f7f9f5; border: 1px solid #cfdbd3; color: #234b43; font: 600 12px/1.4 system-ui, sans-serif; border-radius: 7px; padding: 9px 11px; cursor: pointer; text-align: left; }
+    button:hover { background: #eaf1e9; border-color: #8eac99; }
+    button:focus-visible { outline: 3px solid #d9ae4f; outline-offset: 3px; }
+    #reset { margin-top: 6px; background: #204f43; color: #fff; border-color: #204f43; }
+    #status { display: block; min-height: 62px; margin-top: 15px; border-top: 1px solid #e0e6df; padding-top: 14px; color: #3b5c52; font-size: 12px; }
+    .legend { margin-top: 24px; display: flex; gap: 20px; flex-wrap: wrap; color: #526d65; font-size: 12px; }
+    .legend strong { color: #243f38; font-variant-numeric: tabular-nums; }
+    footer { border-top: 1px solid #d8e0d7; margin-top: 28px; padding-top: 16px; color: #6d7d76; font-size: 11px; }
+    @media (max-width: 850px) { .workspace { grid-template-columns: 1fr; } .control-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 520px) { main { padding: 24px 14px; } .players, .control-list { grid-template-columns: 1fr; } .player { min-height: 0; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Local demonstration — simulated data</p>
+      <h1>Received resource counters</h1>
+      <p class="intro">A preview of the userscript beneath four fictional player panels. Use the scenarios to see current, unknown and stale values. This page has no connection to Board Game Arena.</p>
+    </header>
+    <div class="notice" id="cat_playerboard">Only numbers delivered to the simulated client are shown. A last-seen count is not a prediction of a player's current hand.</div>
+    <div class="workspace" id="game_play_area">
+      <section class="players" aria-label="Simulated player panels">
+        <article class="player" style="--player-color:#b7683b">
+          <div class="player-heading"><span class="avatar" aria-hidden="true">A</span><div><h2>Ada</h2><p class="player-role">Your simulated seat</p></div></div>
+          <div class="cat_playerboard" id="player_board_1"><p class="player-placeholder">CATAN player panel</p></div>
+        </article>
+        <article class="player" style="--player-color:#3d7891">
+          <div class="player-heading"><span class="avatar" aria-hidden="true">B</span><div><h2>Ben</h2><p class="player-role">Simulated opponent</p></div></div>
+          <div class="cat_playerboard" id="player_board_2"><p class="player-placeholder">CATAN player panel</p></div>
+        </article>
+        <article class="player" style="--player-color:#81649a">
+          <div class="player-heading"><span class="avatar" aria-hidden="true">C</span><div><h2>Cleo</h2><p class="player-role">Simulated opponent</p></div></div>
+          <div class="cat_playerboard" id="player_board_3"><p class="player-placeholder">CATAN player panel</p></div>
+        </article>
+        <article class="player" style="--player-color:#5f8760">
+          <div class="player-heading"><span class="avatar" aria-hidden="true">D</span><div><h2>Dani</h2><p class="player-role">Simulated opponent</p></div></div>
+          <div class="cat_playerboard" id="player_board_4"><p class="player-placeholder">CATAN player panel</p></div>
+        </article>
+      </section>
+      <aside class="controls" aria-label="Demo scenarios">
+        <h2>Try a scenario</h2>
+        <p>Changes appear immediately or on the next one-second client check.</p>
+        <div class="control-list">
+          <button id="known-update" type="button">Receive complete counts for Ada</button>
+          <button id="total-only" type="button">Change Ben's total only</button>
+          <button id="partial-update" type="button">Update one count without a total</button>
+          <button id="inconsistent" type="button">Receive inconsistent counts for Cleo</button>
+          <button id="undo" type="button">Simulate undo</button>
+          <button id="replace-panel" type="button">Replace Ben's player panel</button>
+          <button id="detach-client" type="button">Detach client</button>
+          <button id="restore-client" type="button">Restore client</button>
+          <button id="reset" type="button">Reset all demo data</button>
+        </div>
+        <output id="status" role="status" aria-live="polite">Demo loaded. The userscript will add its counters beneath each player.</output>
+      </aside>
+    </div>
+    <div class="legend" aria-label="Counter legend">
+      <span><strong>3</strong> Received count</span>
+      <span><strong>~3</strong> Last seen; may have changed</span>
+      <span><strong>?</strong> Not known</span>
+    </div>
+    <footer>Fictional players and data. No BGA account, network requests, moves or game actions. JSON exports stay on your device. This fixture tests the display and lifecycle; it does not prove compatibility with a live BGA client.</footer>
+  </main>
+  <script src="demo.js"></script>
+  <script src="../catan-resource-tracker.user.js"></script>
+</body>
+</html>
